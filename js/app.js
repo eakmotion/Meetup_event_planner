@@ -106,7 +106,7 @@ function signIn(name) {
 
 submit.onclick = function () {
   emailValidation();
-  // passwordValidation();
+  passwordValidation();
 };
 
 signout.onclick = function () {
