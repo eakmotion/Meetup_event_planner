@@ -61,7 +61,6 @@
       </div>
     </div>
 
-
     <div class="modal fade member-modal" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -70,74 +69,39 @@
             <h4 class="modal-title" id="gridSystemModalLabel">Become our member</h4>
           </div>
           <div class="modal-body">
-            <div class="row">
-                  <div class="span12">
-                    <ul class="nav nav-tabs" role="tablist">
-                      <li role="registration" class="active"><a href="#registration" aria-controls="registration" role="tab" data-toggle="tab">Create an account</a></li>
-                      <li role="sign-in"><a href="#sign-in" aria-controls="sign-in" role="tab" data-toggle="tab">Sign in</a></li>
-                    </ul>
-                    <div class="tab-content modal-body">
-                      <div role="tabpanel" class="tab-pane" id="sign-in">
-                        <form class="form-horizontal" action='#' method="POST" autocomplete="on">
-                          <fieldset>
-                            <div class="control-group">
-                              <label class="control-label"  for="username">Email</label>
-                              <div class="controls">
-                                <input type="text" id="email" name="email" placeholder="" class="input-xlarge form-control" autofocus>
-                              </div>
-                            </div>
-                            <div class="control-group">
-                              <label class="control-label" for="password">Password</label>
-                              <div class="controls">
-                                <input type="password" id="password" name="password" placeholder="" class="input-xlarge form-control">
-                              </div>
-                            </div>
-                            <div class="control-group">
-                              <div class="controls">
-                                <button class="btn btn-success" disabled>Login</button>
-                              </div>
-                            </div>
-                          </fieldset>
-                        </form>
-                      </div>
-
-                      <div role="tabpanel" class="tab-pane active" id="registration">
-                        <div id="errors"></div>
-                        <form class="form-horizontal" id="user-registration" autocomplete="on">
-                          <fieldset>
-                            <div class="control-group">
-                              <label class="control-label"  for="name">Name</label>
-                              <div class="controls">
-                                <input type="text" id="name" name="name" placeholder="your name" class="input-xlarge form-control" required autofocus>
-                              </div>
-                            </div>
-                            <div class="control-group">
-                              <label class="control-label"  for="email">Email</label>
-                              <div class="controls">
-                                <input type="text" id="email" name="email" placeholder="your email" class="input-xlarge form-control" required>
-                              </div>
-                            </div>
-
-                            <div class="control-group">
-                              <label class="control-label" for="password">Password</label>
-                              <div class="controls">
-                                <input type="password" id="first-password" name="password" placeholder="your password" class="input-xlarge form-control" required>
-                              </div>
-                              <div class="controls">
-                                <input type="password" id="second-password" name="password" placeholder="confirm password" class="input-xlarge form-control" required>
-                              </div>
-                            </div>
-                            <div class="control-group">
-                              <div class="controls">
-                                <button class="btn btn-success" id="submit">Create</button>
-                              </div>
-                            </div>
-                          </fieldset>
-                        </form>
-                      </div>
+            <div id="registration">
+              <div id="errors"></div>
+              <form class="form-horizontal" id="user-registration" autocomplete="on">
+                <fieldset>
+                  <div class="control-group">
+                    <label class="control-label"  for="name">Name</label>
+                    <div class="controls">
+                      <input type="text" id="name" name="name" placeholder="your name" class="input-xlarge form-control" required autofocus>
                     </div>
                   </div>
-                </div>
+                  <div class="control-group">
+                    <label class="control-label"  for="email">Email</label>
+                    <div class="controls">
+                      <input type="text" id="email" name="email" placeholder="your email" class="input-xlarge form-control" required>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                      <input type="password" id="first-password" name="password" placeholder="your password" class="input-xlarge form-control" required>
+                    </div>
+                    <div class="controls">
+                      <input type="password" id="second-password" name="password" placeholder="confirm password" class="input-xlarge form-control" required>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <div class="controls">
+                      <button class="btn btn-success" id="submit">Create</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -150,7 +114,6 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Update profile</h4>
           </div>
-
           <div class="modal-body">
               <div id="errors"></div>
               <form class="form-horizontal" id="update-profile" autocomplete="on">
