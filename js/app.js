@@ -42,8 +42,8 @@ function passwordValidation() {
   var secondInputIssuesTracker = new IssueTracker();
 
   function checkValidations() {
-    if(firstPassword.length < 16) {
-      firstInputIssuesTracker.add("should be longer than 16 words");
+    if(firstPassword.length < 8) {
+      firstInputIssuesTracker.add("should be longer than 8 words");
     } else if(secondPassword.length > 100) {
       firstInputIssuesTracker.add("should be less than 100 words");
     }
