@@ -165,15 +165,15 @@ $('#update-profile').submit(function() {
 });
 
 function createEvent() {
+  var start_date = new Date(eventInput.find('#start-event-date').val()).toString().split(" ");
+  var end_date = new Date(eventInput.find('#end-event-date').val()).toString().split(" ");
   Cookies.set('event_' + Cookies.get('counter'), {
     name: eventInput.find('#event-name').val(),
     info: eventInput.find('#event-info').val(),
     host: eventInput.find('#event-host').val(),
     type: eventInput.find('#event-type').val(),
-    start_date: eventInput.find('#start-event-date').val().split('-'),
-    end_date: eventInput.find('#end-event-date').val().split('-'),
-    start_time: eventInput.find('#start-event-time').val(),
-    end_time: eventInput.find('#end-event-time').val(),
+    start_date: start_date,
+    end_date: end_date,
     guest_list: eventInput.find('#event-guest').val(),
     location: eventInput.find('#event-location').val()
   });
@@ -187,6 +187,16 @@ function addCounter() {
 
 $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();
+});
+
+$('#end-event-date').change(function() {
+  validateEventDate();
+});
+
+$('#start-event-date').change(function() {
+  if ($('#end-event-date').val() != undefined) {
+    validateEventDate();
+  }
 });
 
 $(document).ready(function() {
@@ -213,24 +223,31 @@ $(document).ready(function() {
   }
 
   function addNewEvent() {
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
     var largeHtml = '<li><time><span class="day">' +
                     obj.start_date[2] + '</span><span class="month">' +
-                    monthNames[obj.start_date[1] - 1] + '</span><span class="year">' +
-                    obj.start_date[0] + '</span><span class="time">' +
-                    obj.start_time + '</span></time><div class="info"><h2 class="title">' +
+                    obj.start_date[1] + '</span><span class="year">' +
+                    obj.start_date[3] + '</span><span class="time">' +
+                    obj.start_date[4].substr(0,5) + '</span></time><div class="info"><h2 class="title">' +
                     obj.name + '</h2><p class="desc">' +
                     obj.info + '</p><ul><li>' +
                     '<b>Location:</b> ' + obj.location + '</li><li>' +
                     '<b>Organizer:</b> ' + obj.host + '</li></ul><ul><li>' +
                     '<b>type:</b> ' + obj.type + '</li><li>' +
-                    obj.start_date[2] + ' ' + monthNames[obj.start_date[1] - 1] + ', ' +
-                    obj.start_time + ' - ' + obj.end_date[2] + ' ' + monthNames[obj.start_date[1] - 1] + ', ' +
-                    obj.end_time + '</li></ul><ul><li>' +
+                    obj.start_date[2] + ' ' + obj.start_date[1] + ', ' +
+                    obj.start_date[4].substr(0,5) + ' - ' + obj.end_date[2] + ' ' + obj.end_date[1] + ', ' +
+                    obj.end_date[4].substr(0,5) + '</li></ul><ul><li>' +
                     '<b>Guest list:</b> ' + obj.guest_list + '</li></ul></div></li>'
     $('#test-json').prepend(largeHtml);
     $('#upcomming-event-list span').html(Cookies.get('counter'));
   }
 });
+
+function validateEventDate() {
+  var start_date = new Date(eventInput.find('#start-event-date').val());
+  var end_date = new Date(eventInput.find('#end-event-date').val());
+
+  if (end_date < start_date){
+    alert('End date should be greater than start date');
+    document.getElementById("end-event-date").value = "";
+  }
+}
