@@ -78,11 +78,6 @@ ul.event-list, .jumbotron ul {
   margin-top: 10px;
 }
 
-@media only screen and (max-width: 500px) {
-  .event-date span.glyphicon, .event-date #basic-addon1{
-    display: none;
-  }
-}
 @media (min-width: 768px) {
   .event-list > li {
     position: relative;

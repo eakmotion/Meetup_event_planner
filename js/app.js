@@ -3,7 +3,7 @@
 var firstPasswordInput = document.querySelector('#registration #first-password');
 var secondPasswordInput = document.querySelector('#registration #second-password');
 var emailInput = document.querySelector('#registration #email');
-var submit = document.querySelector('#registration #submit');
+var signupBtn = document.querySelector('#registration #signup-btn');
 var signout = document.querySelector('.user-nav .sign-out');
 var error = document.querySelector('#registration #errors');
 var eventInput = $('#event-form');
@@ -104,7 +104,7 @@ function signIn(name) {
   userNav.find('.username').text(name);
 }
 
-submit.onclick = function () {
+signupBtn.onclick = function () {
   emailValidation();
   passwordValidation();
 };
