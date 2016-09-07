@@ -117,3 +117,18 @@ ul.event-list, .jumbotron ul {
   .event-list > li:nth-child(even) { background-color: rgb(165, 82, 167); }
   .event-list > li > time { background-color: transparent; }
 }
+
+.validate-input input + ul.input-requirements {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1s ease-out;
+}
+.validate-input input:hover + ul.input-requirements,
+.validate-input input:focus + ul.input-requirements,
+.validate-input input:active + ul.input-requirements {
+  max-height: 100%;
+  transition: max-height 1s ease-in;
+}
+.valid { color: green; }
+.invalid { color: red; }
+ul.input-requirements li { list-style-type: circle; }

@@ -40,41 +40,56 @@ function passwordValidation() {
 
   var firstInputIssuesTracker = new IssueTracker();
   var secondInputIssuesTracker = new IssueTracker();
+  var inputRequirements = $('#registration #first-password + ul.input-requirements');
 
-  function checkValidations() {
-    if(firstPassword.length < 8) {
-      firstInputIssuesTracker.add("should be longer than 8 words");
-    } else if(secondPassword.length > 100) {
-      firstInputIssuesTracker.add("should be less than 100 words");
-    }
-
-    if (!firstPassword.match(/[\!\@\#\$\%\^\&\*]/g)) {
-      firstInputIssuesTracker.add("missing a symbol");
-    }
-
-    if (!firstPassword.match(/[0-9]/g)) {
-      firstInputIssuesTracker.add("missing a number");
-    }
-
-    if (!firstPassword.match(/[a-z]/g)) {
-      firstInputIssuesTracker.add("missing a lowercase letter");
-    }
-
-    if (!firstPassword.match(/[A-Z]/g)) {
-      firstInputIssuesTracker.add("missing an uppercase letter");
-    }
-
-    var illegalChars = firstPassword.match(/[^A-z0-9\!\@\#\$\%\^\&\*]/g);
-    if (illegalChars) {
-      illegalChars.forEach(function (illegalChar) {
-        firstInputIssuesTracker.add("includes illegal characters: " + illegalChar);
-      });
-    }
+  if(firstPassword.length < 8 || firstPassword.length > 100) {
+    firstInputIssuesTracker.add("should be longer than 8 words and less than 100 words");
+    inputRequirements.find('li.length').addClass('invalid');
+  } else {
+    inputRequirements.find('li.length').addClass('valid');
+    inputRequirements.find('li.length').removeClass('invalid');
   }
 
-  if (firstPassword === secondPassword && firstPassword.length > 0) {
-    checkValidations();
+  if (!firstPassword.match(/[\!\@\#\$\%\^\&\*]/g)) {
+    firstInputIssuesTracker.add("missing a symbol");
+    inputRequirements.find('li.special').addClass('invalid');
   } else {
+    inputRequirements.find('li.special').removeClass('invalid');
+    inputRequirements.find('li.special').addClass('valid');
+  }
+
+  if (!firstPassword.match(/[0-9]/g)) {
+    firstInputIssuesTracker.add("missing a number");
+    inputRequirements.find('li.number').addClass('invalid');
+  } else {
+    inputRequirements.find('li.number').removeClass('invalid');
+    inputRequirements.find('li.number').addClass('valid');
+  }
+
+  if (!firstPassword.match(/[a-z]/g)) {
+    firstInputIssuesTracker.add("missing a lowercase letter");
+    inputRequirements.find('li.lowercase').addClass('invalid');
+  } else {
+    inputRequirements.find('li.lowercase').removeClass('invalid');
+    inputRequirements.find('li.lowercase').addClass('valid');
+  }
+
+  if (!firstPassword.match(/[A-Z]/g)) {
+    firstInputIssuesTracker.add("missing an uppercase letter");
+    inputRequirements.find('li.uppercase').addClass('invalid');
+  } else {
+    inputRequirements.find('li.uppercase').removeClass('invalid');
+    inputRequirements.find('li.uppercase').addClass('valid');
+  }
+
+  var illegalChars = firstPassword.match(/[^A-z0-9\!\@\#\$\%\^\&\*]/g);
+  if (illegalChars) {
+    illegalChars.forEach(function (illegalChar) {
+      firstInputIssuesTracker.add("includes illegal characters: " + illegalChar);
+    });
+  }
+
+  if (firstPassword !== secondPassword) {
     secondInputIssuesTracker.add("Password must be match");
   }
 
@@ -197,6 +212,10 @@ $('#start-event-date').change(function() {
   if ($('#end-event-date').val() != undefined) {
     validateEventDate();
   }
+});
+
+$('#first-password').keyup(function() {
+  passwordValidation();
 });
 
 $(document).ready(function() {

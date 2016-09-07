@@ -81,8 +81,15 @@
                   </div>
                   <div class="control-group">
                     <label class="control-label" for="signupPassword">Password</label>
-                    <div class="controls">
+                    <div class="controls validate-input">
                       <input type="password" id="first-password" name="signupPassword" placeholder="your password" class="input-xlarge form-control" required>
+                      <ul class="input-requirements">
+                        <li class="length"> Must be at least 8 characters long, and less than 100 characters</li>
+                        <li class="lowercase"> Must contain a lowercase letter.</li>
+                        <li class="uppercase"> Must contain an uppercase letter.</li>
+                        <li class="number"> Must contain a number.</li>
+                        <li class="special"> Must contain a number or special character.</li>
+                      </ul>
                     </div>
                     <div class="controls">
                       <input type="password" id="second-password" name="signupConfirmPassword" placeholder="confirm password" class="input-xlarge form-control" required>
