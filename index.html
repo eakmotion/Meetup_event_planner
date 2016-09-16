@@ -1,4 +1,5 @@
-<html lang="en"><head>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,8 +41,7 @@
     <div class="container">
       <div class="jumbotron">
         <h1>Find fun and friends</h1>
-        <h3>Neighbors getting together <br/>
-        </h3>
+        <h3>Neighbors getting together</h3><br/>
         <hr class="intro-divider">
         <ul>
           <li>
@@ -68,21 +68,21 @@
               <form class="form-horizontal" id="user-registration" autocomplete="on">
                 <fieldset>
                   <div class="control-group">
-                    <label class="control-label" for="signupName">Name</label>
+                    <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                      <input type="text" id="name" name="signupName" placeholder="your name" class="input-xlarge form-control" required autofocus>
+                      <input type="text" id="name" name="name" placeholder="your name" class="input-xlarge form-control" required autofocus>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="signupEmail">Email</label>
+                    <label class="control-label" for="email">Email</label>
                     <div class="controls">
-                      <input type="text" id="email" name="signupEmail" placeholder="your email" class="input-xlarge form-control" required>
+                      <input type="text" id="email" name="email" placeholder="your email" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="signupPassword">Password</label>
+                    <label class="control-label" for="first-password">Password</label>
                     <div class="controls validate-input">
-                      <input type="password" id="first-password" name="signupPassword" placeholder="your password" class="input-xlarge form-control" required>
+                      <input type="password" id="first-password" name="first-password" placeholder="your password" class="input-xlarge form-control" required>
                       <ul class="input-requirements">
                         <li class="length"> Must be at least 8 characters long, and less than 100 characters</li>
                         <li class="lowercase"> Must contain a lowercase letter.</li>
@@ -92,7 +92,8 @@
                       </ul>
                     </div>
                     <div class="controls">
-                      <input type="password" id="second-password" name="signupConfirmPassword" placeholder="confirm password" class="input-xlarge form-control" required>
+                      <label class="control-label" for="second-password">Confirm password</label>
+                      <input type="password" id="second-password" name="second-password" placeholder="confirm password" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
@@ -119,44 +120,39 @@
               <form class="form-horizontal" autocomplete="on">
                 <fieldset>
                   <div class="control-group">
-                    <label class="control-label"  for="name">Name</label>
+                    <label class="control-label" for="user-name">Name</label>
                     <div class="controls">
-                      <input type="text" id="user-name" name="name" placeholder="name" class="input-xlarge form-control" required autofocus>
+                      <input type="text" id="user-name" name="user-name" placeholder="Name" class="input-xlarge form-control" required autofocus>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label"  for="email">Email</label>
+                    <label class="control-label" for="user-email">Email</label>
                     <div class="controls">
-                      <input type="text" id="user-email" name="email" placeholder="Email" class="input-xlarge form-control" required>
+                      <input type="text" id="user-email" name="user-email" placeholder="Email" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="company">Company</label>
+                    <label class="control-label" for="user-company">Company</label>
                     <div class="controls">
-                      <input type="text" id="user-company" name="company" placeholder="company" class="input-xlarge form-control" required>
+                      <input type="text" id="user-company" name="user-company" placeholder="Company" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="job">Job</label>
+                    <label class="control-label" for="user-job">Job</label>
                     <div class="controls">
-                      <input type="text" id="user-job" name="job" placeholder="job" class="input-xlarge form-control" required>
+                      <input type="text" id="user-job" name="user-job" placeholder="Job" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="birthday">Birthday</label>
-                    <div class="row">
-                      <div class="form-group">
-                        <div class="input-group">
-                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-                          <input class="form-control" name="birthday" id="birthday" type="date">
-                        </div>
-                      </div>
+                    <label class="control-label" for="user-birthday">Birthday</label>
+                    <div class="controls">
+                      <input id="user-birthday" name="user-birthday" type="date" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="country">Country</label>
+                    <label class="control-label" for="user-country">Country</label>
                     <div class="controls">
-                      <input type="text" id="user-country" name="country" placeholder="country" class="input-xlarge form-control" required>
+                      <input type="text" id="user-country" name="user-country" placeholder="Country" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
@@ -182,15 +178,15 @@
               <form class="form-horizontal" id="event-form" autocomplete="on">
                 <fieldset>
                   <div class="control-group">
-                    <label class="control-label" for="eventName">Event Name</label>
+                    <label class="control-label" for="event-name">Event Name</label>
                     <div class="controls">
-                      <input type="text" id="event-name" name="eventName" placeholder="Event name" class="input-xlarge form-control" required autofocus>
+                      <input type="text" id="event-name" name="event-name" placeholder="Event name" class="input-xlarge form-control" required autofocus>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="eventType">Type</label>
+                    <label class="control-label" for="event-type">Type</label>
                     <div class="controls">
-                      <select class="span3 form-control" id="event-type" name="eventType">
+                      <select class="span3 form-control" id="event-type" name="event-type">
                           <option selected value="na">
                               Choose One:
                           </option>
@@ -210,51 +206,41 @@
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label" for="eventHost">Host</label>
+                    <label class="control-label" for="event-host">Host</label>
                     <div class="controls">
-                      <input type="text" id="event-host" name="eventHost" placeholder="Host of event" class="input-xlarge form-control" required>
+                      <input type="text" id="event-host" name="event-host" placeholder="Host of event" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class='event-date'>
                     <div class="control-group">
-                      <label class="control-label" for="eventStartDate">Start date</label>
-                      <div class="row">
-                        <div class="form-group start-event-date">
-                        	<div class="input-group start-event-date-time">
-                        		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-                            <input class="form-control" type="datetime-local" id="start-event-date">
-                        	</div>
-                        </div>
-                    	</div>
+                      <label class="control-label" for="start-event-date">Start date</label>
+                      <div class="controls">
+                        <input id="start-event-date" name="start-event-date" type="datetime-local" class="input-xlarge form-control" required>
+                      </div>
                     </div>
                     <div class="control-group">
-                      <label class="control-label" for="eventEndDate">End date</label>
-                      <div class="row">
-                        <div class="form-group end-event-date">
-                          <div class="input-group end-event-date-time">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-                            <input class="form-control" type="datetime-local" id="end-event-date">
-                          </div>
-                        </div>
+                      <label class="control-label" for="end-event-date">End date</label>
+                      <div class="controls">
+                        <input id="end-event-date" name="end-event-date" type="datetime-local" class="input-xlarge form-control" required>
                       </div>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label"  for="eventGuest">Guest list</label>
+                    <label class="control-label"  for="event-guest">Guest list</label>
                     <div class="controls">
-                      <textarea id="event-guest" name="eventGuest" placeholder="guest list" class="input-xlarge form-control" required></textarea>
+                      <input id="event-guest" name="event-guest" placeholder="guest list" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label"  for="eventLocation">Location</label>
+                    <label class="control-label"  for="event-location">Location</label>
                     <div class="controls">
-                      <input id="event-location" name="eventLocation" placeholder="location" class="input-xlarge form-control" required>
+                      <input id="event-location" name="event-location" placeholder="location" class="input-xlarge form-control" required>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label"  for="eventInfo">Additional info</label>
+                    <label class="control-label"  for="event-info">Additional info</label>
                     <div class="controls">
-                      <textarea id="event-info" name="eventInfo" placeholder="additional info" class="input-xlarge form-control"></textarea>
+                      <textarea id="event-info" name="event-info" placeholder="additional info" class="input-xlarge form-control"></textarea>
                     </div>
                   </div>
                   <div class="control-group">
@@ -298,5 +284,5 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/js/js.cookie.js"></script>
     <script src="js/app.js" charset="utf-8"></script>
-</body>
+  </body>
 </html>

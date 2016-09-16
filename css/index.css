@@ -131,4 +131,17 @@ ul.event-list, .jumbotron ul {
 }
 .valid { color: green; }
 .invalid { color: red; }
+input.dirty:not(:focus):valid { border-color: green; }
+input.dirty:not(:focus):invalid { border-color: red; }
+
+input.dirty:not(:focus):valid ~ pre.invalid,
+input.dirty:not(:active):valid ~ pre.invalid,
+input.dirty:not(:hover):valid ~ pre.invalid,
+input.dirty:not(:visited):valid ~ pre.invalid {
+  display: none;
+}
 ul.input-requirements li { list-style-type: circle; }
+#event-form pre.invalid, #user-registration pre.invalid, #update-profile pre.invalid {
+  background-color: transparent;
+  border: none;
+}

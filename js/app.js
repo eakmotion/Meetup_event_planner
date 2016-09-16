@@ -9,6 +9,8 @@ var error = document.querySelector('#registration #errors');
 var eventInput = $('#event-form');
 var profileInput = $('#update-profile');
 var userInput = $('#user-registration');
+var startDateInput = document.querySelector('#start-event-date');
+var endDateInput = document.querySelector('#end-event-date');
 
 function IssueTracker() {
   this.issues = [];
@@ -24,10 +26,10 @@ IssueTracker.prototype = {
       case 0:
         break;
       case 1:
-        message = "Please correct the following issues:\n" + this.issues[0];
+        message = this.issues[0];
         break;
       default:
-        message = "Please correct the following issues:\n" + this.issues.join("\n");
+        message = this.issues.join("\n");
         break;
     }
     return message;
@@ -204,18 +206,16 @@ $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();
 });
 
-$('#end-event-date').change(function() {
-  validateEventDate();
-});
-
-$('#start-event-date').change(function() {
-  if ($('#end-event-date').val() != undefined) {
-    validateEventDate();
-  }
-});
-
-$('#first-password').keyup(function() {
+$('#first-password').on('input', function() {
   passwordValidation();
+});
+
+$('#second-password').on('input', function() {
+  passwordValidation();
+});
+
+$('#email').on('input', function() {
+  emailValidation();
 });
 
 $(document).ready(function() {
@@ -259,14 +259,30 @@ $(document).ready(function() {
     $('#test-json').prepend(largeHtml);
     $('#upcomming-event-list span').html(Cookies.get('counter'));
   }
+
+  var today = new Date();
+  startDateInput.min = today.toJSON().substr(0,16);
 });
 
-function validateEventDate() {
-  var start_date = new Date(eventInput.find('#start-event-date').val());
-  var end_date = new Date(eventInput.find('#end-event-date').val());
+startDateInput.addEventListener('change', function() {
+  if (startDateInput.value)
+    var startDateValue = new Date(startDateInput.value)
+    startDateValue.setMinutes(startDateValue.getMinutes() + 10)
+    endDateInput.min = startDateValue.toJSON().substr(0,16);
+}, false);
 
-  if (end_date < start_date){
-    alert('End date should be greater than start date');
-    document.getElementById("end-event-date").value = "";
-  }
+var forms = document.getElementsByTagName('form');
+for (var i = 0; i < forms.length; i++) {
+    forms[i].addEventListener('invalid', function(e) {
+      e.preventDefault();
+      $('pre.invalid', e.target.parentElement).remove();
+      e.target.parentElement.insertAdjacentHTML("beforeend", "<pre class='invalid'>" + e.target.validationMessage + "</pre>");
+    }, true);
+}
+
+var inputs = document.querySelectorAll('input:not([type="submit"])');
+for (var i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('input', function(e) {
+      e.target.classList.add('dirty');
+    });
 }
