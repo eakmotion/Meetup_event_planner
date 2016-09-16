@@ -1,5 +1,3 @@
-"use strict";
-
 var firstPasswordInput = document.querySelector('#registration #first-password');
 var secondPasswordInput = document.querySelector('#registration #second-password');
 var emailInput = document.querySelector('#registration #email');
