@@ -11,7 +11,7 @@ var reload = browserSync.reload;
 
 gulp.task('run', ['watch'], function(){
 	browserSync.init({
-		server: {}
+		server: './'
 	});
 	browserSync.stream();
 });
