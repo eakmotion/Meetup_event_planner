@@ -254,7 +254,7 @@ $(document).ready(function() {
                     obj.start_date[4].substr(0,5) + ' - ' + obj.end_date[2] + ' ' + obj.end_date[1] + ', ' +
                     obj.end_date[4].substr(0,5) + '</li></ul><ul><li>' +
                     '<b>Guest list:</b> ' + obj.guest_list + '</li></ul></div></li>'
-    $('#test-json').prepend(largeHtml);
+    $('#events-json').prepend(largeHtml);
     $('#upcomming-event-list span').html(Cookies.get('counter'));
   }
 
