@@ -161,3 +161,8 @@ form *:invalid button.btn-success {
 form *:valid button.btn-success {
   display: inline;
 }
+
+.required-field label::after {
+  content: ' *';
+  color: red;
+}
