@@ -9,120 +9,13 @@ var profileInput = $('#update-profile');
 var userInput = $('#user-registration');
 var startDateInput = document.querySelector('#start-event-date');
 var endDateInput = document.querySelector('#end-event-date');
-
-function IssueTracker() {
-  this.issues = [];
-}
-
-IssueTracker.prototype = {
-  add: function(issue) {
-    this.issues.push(issue);
-  },
-  retrieve: function() {
-    var message = "";
-    switch (this.issues.length) {
-      case 0:
-        break;
-      case 1:
-        message = this.issues[0];
-        break;
-      default:
-        message = this.issues.join("\n");
-        break;
-    }
-    return message;
-  }
-}
-
-function passwordValidation() {
-  var firstPassword = firstPasswordInput.value;
-  var secondPassword = secondPasswordInput.value;
-
-  var firstInputIssuesTracker = new IssueTracker();
-  var secondInputIssuesTracker = new IssueTracker();
-  var inputRequirements = $('#registration #first-password + ul.input-requirements');
-
-  if(firstPassword.length < 8 || firstPassword.length > 100) {
-    firstInputIssuesTracker.add("should be longer than 8 words and less than 100 words");
-    inputRequirements.find('li.length').addClass('invalid');
-  } else {
-    inputRequirements.find('li.length').addClass('valid');
-    inputRequirements.find('li.length').removeClass('invalid');
-  }
-
-  if (!firstPassword.match(/[\!\@\#\$\%\^\&\*]/g)) {
-    firstInputIssuesTracker.add("missing a symbol");
-    inputRequirements.find('li.special').addClass('invalid');
-  } else {
-    inputRequirements.find('li.special').removeClass('invalid');
-    inputRequirements.find('li.special').addClass('valid');
-  }
-
-  if (!firstPassword.match(/[0-9]/g)) {
-    firstInputIssuesTracker.add("missing a number");
-    inputRequirements.find('li.number').addClass('invalid');
-  } else {
-    inputRequirements.find('li.number').removeClass('invalid');
-    inputRequirements.find('li.number').addClass('valid');
-  }
-
-  if (!firstPassword.match(/[a-z]/g)) {
-    firstInputIssuesTracker.add("missing a lowercase letter");
-    inputRequirements.find('li.lowercase').addClass('invalid');
-  } else {
-    inputRequirements.find('li.lowercase').removeClass('invalid');
-    inputRequirements.find('li.lowercase').addClass('valid');
-  }
-
-  if (!firstPassword.match(/[A-Z]/g)) {
-    firstInputIssuesTracker.add("missing an uppercase letter");
-    inputRequirements.find('li.uppercase').addClass('invalid');
-  } else {
-    inputRequirements.find('li.uppercase').removeClass('invalid');
-    inputRequirements.find('li.uppercase').addClass('valid');
-  }
-
-  var illegalChars = firstPassword.match(/[^A-z0-9\!\@\#\$\%\^\&\*]/g);
-  if (illegalChars) {
-    illegalChars.forEach(function (illegalChar) {
-      firstInputIssuesTracker.add("includes illegal characters: " + illegalChar);
-    });
-  }
-
-  if (firstPassword !== secondPassword) {
-    secondInputIssuesTracker.add("Password must be match");
-  }
-
-  var firstInputIssues = firstInputIssuesTracker.retrieve();
-  var secondInputIssues = secondInputIssuesTracker.retrieve();
-
-  firstPasswordInput.setCustomValidity(firstInputIssues);
-  secondPasswordInput.setCustomValidity(secondInputIssues);
-}
-
-function emailValidation(){
-  var emailValue = emailInput.value;
-  var emailInputIssuesTracker = new IssueTracker();
-
-  var emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (!emailValue.match(emailPattern)) {
-    emailInputIssuesTracker.add("incorrect email");
-  };
-
-  var emailInputIssues = emailInputIssuesTracker.retrieve();
-  emailInput.setCustomValidity(emailInputIssues);
-}
+var today = new Date();
 
 function signIn(name) {
   var userNav = $('.user-nav');
   userNav.removeClass('hidden');
   userNav.find('.username').text(name);
 }
-
-signupBtn.onclick = function () {
-  emailValidation();
-  passwordValidation();
-};
 
 signout.onclick = function () {
   Cookies.remove('current_user');
@@ -204,18 +97,6 @@ $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();
 });
 
-$('#first-password').on('input', function() {
-  passwordValidation();
-});
-
-$('#second-password').on('input', function() {
-  passwordValidation();
-});
-
-$('#email').on('input', function() {
-  emailValidation();
-});
-
 $(document).ready(function() {
   if(Cookies.get('current_user') != undefined){
     signIn(Cookies.getJSON('current_user').name);
@@ -258,7 +139,6 @@ $(document).ready(function() {
     $('#upcomming-event-list span').html(Cookies.get('counter'));
   }
 
-  var today = new Date();
   startDateInput.min = today.toJSON().substr(0,16);
 });
 
@@ -283,4 +163,299 @@ for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('input', function(e) {
       e.target.classList.add('dirty');
     });
+}
+
+function checkInput(input) {
+	if ( input.IssueTracker ) {
+		input.IssueTracker.checkValidity(input);
+		input.CustomValidation.displayInvalidities(input);
+		if ( input.CustomValidation.invalidities.length == 0 && input.value != '' ) {
+			input.setCustomValidity('');
+		} else {
+			var message = input.CustomValidation.getInvalidities();
+			input.setCustomValidity(message);
+		}
+	}
+}
+
+var inputs = document.querySelectorAll('input');
+var submit = document.querySelector('button[type="submit"]');
+if (inputs) {
+	for (var i = 0; i < inputs.length; i++) {
+		var input = inputs[i];
+		input.addEventListener('change', function() {
+			checkInput(this);
+		});
+		input.addEventListener('keyup', function() {
+			checkInput(this);
+		});
+	}
+}
+
+function CustomValidation() {
+	this.invalidities = [];
+	this.validityChecks = [];
+	this.displayInvaliditiesOnBlur = true;
+}
+CustomValidation.prototype = {
+	addInvalidity: function(message) {
+		this.invalidities.push(message);
+	},
+	getInvalidities: function() {
+		return this.invalidities.join('. \n');
+	},
+	displayInvalidities: function(input) {
+		this.checkValidity(input);
+		if ( this.displayInvaliditiesOnBlur ) {
+			if ( this.invalidities.length > 0 ) {
+				input.classList.add('invalid');
+			} else {
+				input.classList.remove('invalid');
+			}
+			var invaliditiesArray = [];
+			for ( var i = 0; i < this.invalidities.length; i++ ) {
+				invaliditiesArray.push('<li>'+this.invalidities[i]+'</li>');
+			}
+			invaliditiesArray = invaliditiesArray.join();
+			var inputID = input.getAttribute('id');
+			var inputRequirements = document.querySelector('#'+inputID+' + ul');
+			inputRequirements.innerHTML = invaliditiesArray;
+		} else {
+
+			if ( this.invalidities.length > 0 ) {
+				input.classList.add('invalid');
+			} else {
+				input.classList.remove('invalid');
+			}
+		}
+	},
+	checkValidity: function(input) {
+		this.invalidities = [];
+		for ( var i = 0; i < this.validityChecks.length; i++ ) {
+			var isInvalid = this.validityChecks[i].isInvalid(input);
+			if (isInvalid) {
+				this.addInvalidity(this.validityChecks[i].invalidityMessage);
+			}
+			var requirementElement = this.validityChecks[i].element;
+			if (requirementElement) {
+				if (!isInvalid) {
+					requirementElement.classList.add('valid');
+				} else {
+					requirementElement.classList.remove('valid');
+				}
+			}
+		}
+	}
+};
+
+function checkInput(input) {
+	if ( input.CustomValidation ) {
+		input.CustomValidation.checkValidity(input);
+		input.CustomValidation.displayInvalidities(input);
+		if ( input.CustomValidation.invalidities.length == 0 && input.value != '' ) {
+			input.setCustomValidity('');
+		} else {
+			var message = input.CustomValidation.getInvalidities();
+			input.setCustomValidity(message);
+		}
+	}
+}
+
+if (emailInput) {
+	emailInput.CustomValidation = new CustomValidation();
+	emailInput.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+        var emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				return !emailInput.value.match(emailPattern);
+			},
+			invalidityMessage: 'Invalid email address'
+		}
+	];
+}
+
+if (firstPasswordInput) {
+	firstPasswordInput.CustomValidation = new CustomValidation();
+	firstPasswordInput.CustomValidation.displayInvaliditiesOnBlur = false;
+	firstPasswordInput.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 8 || input.value.length > 100;
+			},
+			invalidityMessage: 'Should be longer than 8 words and less than 100 words',
+			element: document.querySelector('#first-password + ul li.length')
+		},
+    {
+			isInvalid: function(input) {
+				return !input.value.match(/[\!\@\#\$\%\^\&\*]/g);
+			},
+			invalidityMessage: 'Missing a symbol',
+			element: document.querySelector('#first-password + ul li.special')
+		},
+		{
+			isInvalid: function(input) {
+				return !input.value.match(/[0-9]/g);
+			},
+			invalidityMessage: 'Missing a number',
+			element: document.querySelector('#first-password + ul li.number')
+		},
+		{
+			isInvalid: function(input) {
+				return !input.value.match(/[a-z]/g);
+			},
+			invalidityMessage: 'Missing a lowercase letter',
+			element: document.querySelector('#first-password + ul li.lowercase')
+		},
+		{
+			isInvalid: function(input) {
+				return !input.value.match(/[A-Z]/g);
+			},
+			invalidityMessage: 'Missing an uppercase letter',
+			element: document.querySelector('#first-password + ul li.uppercase')
+		}
+	];
+}
+
+if (secondPasswordInput) {
+	secondPasswordInput.CustomValidation = new CustomValidation();
+	secondPasswordInput.CustomValidation.validityChecks = [
+		{
+			isInvalid: function() {
+				return (secondPasswordInput.value != firstPasswordInput.value) && secondPasswordInput.value.value != '';
+			},
+			invalidityMessage: 'Password must be match'
+		}
+	];
+}
+
+var userName = document.getElementById('name');
+if (userName) {
+	userName.CustomValidation = new CustomValidation();
+	userName.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var userCompany = document.getElementById('user-company');
+if (userCompany) {
+	userCompany.CustomValidation = new CustomValidation();
+	userCompany.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var userJob = document.getElementById('user-job');
+if (userJob) {
+	userJob.CustomValidation = new CustomValidation();
+	userJob.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var userCountry = document.getElementById('user-country');
+if (userCountry) {
+	userCountry.CustomValidation = new CustomValidation();
+	userCountry.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var eventName = document.getElementById('event-name');
+if (eventName) {
+	eventName.CustomValidation = new CustomValidation();
+	eventName.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var eventHost = document.getElementById('event-host');
+if (eventHost) {
+	eventHost.CustomValidation = new CustomValidation();
+	eventHost.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var eventGuest = document.getElementById('event-guest');
+if (eventGuest) {
+	eventGuest.CustomValidation = new CustomValidation();
+	eventGuest.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+var eventLocation = document.getElementById('event-location');
+if (eventLocation) {
+	eventLocation.CustomValidation = new CustomValidation();
+	eventLocation.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+				return input.value.length < 3;
+			},
+			invalidityMessage: 'Needs to be at least 3 characters'
+		}
+	];
+}
+
+if (startDateInput) {
+	startDateInput.CustomValidation = new CustomValidation();
+	startDateInput.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+        var startDate = new Date(input.value)
+				return startDate < today;
+			},
+			invalidityMessage: 'The start date need to be from now'
+		}
+	];
+}
+
+if (endDateInput) {
+	endDateInput.CustomValidation = new CustomValidation();
+	endDateInput.CustomValidation.validityChecks = [
+		{
+			isInvalid: function(input) {
+        var endDate = new Date(input.value)
+        var startDateValue = new Date(startDateInput.value)
+        startDateValue.setMinutes(startDateValue.getMinutes() + 10)
+				return endDate < startDateValue;
+			},
+			invalidityMessage: 'The end date need to be after start date'
+		}
+	];
 }
